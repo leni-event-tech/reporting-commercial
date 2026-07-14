@@ -295,7 +295,8 @@
 <script src="data/part-11.js"></script>
 <script src="data/part-12.js"></script>
 <script>
-const DATA = JSON.parse(document.getElementById('data-json').textContent);
+const DATA = JSON.parse(window.__DATA_PARTS.join(''));
+window.__DATA_PARTS = null;
 function fmt(n){ return Math.round(n).toLocaleString('fr-FR'); }
 function fmtSigned(n){ return (n>=0?'+':'') + Math.round(n).toLocaleString('fr-FR'); }
 function fmtEuro(n){ return n.toLocaleString('fr-FR',{maximumFractionDigits:0}); }
