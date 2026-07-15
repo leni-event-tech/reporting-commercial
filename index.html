@@ -402,11 +402,13 @@ function renderPagination(containerId, page, totalPages, onPage){
   const maxShow = 5;
   let start = Math.max(1, page-2), end = Math.min(totalPages, start+maxShow-1);
   start = Math.max(1, end-maxShow+1);
-  btns += `<button class="page-btn" data-p="${page-1}" ${page===1?'disabled':''}>‹</button>`;
+  btns += `<button class="page-btn" data-p="1" ${page===1?'disabled':''} aria-label="Première page" title="Première page">«</button>`;
+  btns += `<button class="page-btn" data-p="${page-1}" ${page===1?'disabled':''} aria-label="Page précédente" title="Page précédente">‹</button>`;
   for(let p=start;p<=end;p++){
     btns += `<button class="page-btn ${p===page?'active':''}" data-p="${p}">${p}</button>`;
   }
-  btns += `<button class="page-btn" data-p="${page+1}" ${page===totalPages?'disabled':''}>›</button>`;
+  btns += `<button class="page-btn" data-p="${page+1}" ${page===totalPages?'disabled':''} aria-label="Page suivante" title="Page suivante">›</button>`;
+  btns += `<button class="page-btn" data-p="${totalPages}" ${page===totalPages?'disabled':''} aria-label="Dernière page" title="Dernière page">»</button>`;
   btns += `<span class="page-info">${totalPages} pages</span>`;
   el.innerHTML = btns;
   el.querySelectorAll('.page-btn').forEach(b=>{
