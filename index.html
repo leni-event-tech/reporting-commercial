@@ -199,6 +199,9 @@
   .page-btn{border:1px solid var(--border);background:#fff;border-radius:var(--radius-sm);min-width:32px;height:32px;font-size:12px;font-weight:600;cursor:pointer;padding:0 7px;}
   .page-btn.active{background:var(--blue-accent);color:#fff;border-color:var(--blue-accent);}
   .page-btn:disabled{opacity:.35;cursor:default;}
+  .page-jump{margin-left:auto;display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted);white-space:nowrap;}
+  .page-select{height:32px;min-width:68px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;color:var(--text);padding:0 26px 0 10px;font:600 12px Inter,sans-serif;cursor:pointer;outline:none;transition:border-color .15s ease,box-shadow .15s ease;}
+  .page-select:hover,.page-select:focus{border-color:var(--blue-accent);box-shadow:0 0 0 3px var(--blue-soft);}
   .page-info{font-size:11px;color:var(--text-muted);margin:0 6px;}
 
   .mini-tag{display:inline-flex;align-items:center;gap:5px;background:#eef1f7;border-radius:7px;padding:3px 8px;font-size:11px;font-weight:600;color:var(--navy);}
@@ -402,18 +405,18 @@ function renderPagination(containerId, page, totalPages, onPage){
   const maxShow = 5;
   let start = Math.max(1, page-2), end = Math.min(totalPages, start+maxShow-1);
   start = Math.max(1, end-maxShow+1);
-  btns += `<button class="page-btn" data-p="1" ${page===1?'disabled':''} aria-label="Première page" title="Première page">«</button>`;
   btns += `<button class="page-btn" data-p="${page-1}" ${page===1?'disabled':''} aria-label="Page précédente" title="Page précédente">‹</button>`;
   for(let p=start;p<=end;p++){
     btns += `<button class="page-btn ${p===page?'active':''}" data-p="${p}">${p}</button>`;
   }
   btns += `<button class="page-btn" data-p="${page+1}" ${page===totalPages?'disabled':''} aria-label="Page suivante" title="Page suivante">›</button>`;
-  btns += `<button class="page-btn" data-p="${totalPages}" ${page===totalPages?'disabled':''} aria-label="Dernière page" title="Dernière page">»</button>`;
   btns += `<span class="page-info">${totalPages} pages</span>`;
+  btns += `<label class="page-jump">Aller à la page <select class="page-select" aria-label="Aller à la page">${Array.from({length:totalPages},(_,i)=>`<option value="${i+1}" ${i+1===page?'selected':''}>${i+1}</option>`).join('')}</select></label>`;
   el.innerHTML = btns;
   el.querySelectorAll('.page-btn').forEach(b=>{
     b.addEventListener('click', ()=> onPage(parseInt(b.dataset.p)));
   });
+  el.querySelector('.page-select')?.addEventListener('change',e=>onPage(parseInt(e.target.value)));
 }
 
 /* ================= 1. TOP AFFAIRES (master-detail) ================= */
