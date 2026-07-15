@@ -23,6 +23,7 @@
   .app-layout{display:grid;grid-template-columns:238px minmax(0,1fr);min-height:100vh;}
   .sidebar{position:sticky;top:0;height:100vh;background:#fff;border-right:1px solid var(--border);padding:20px 16px;z-index:30;overflow-y:auto;}
   .sidebar-brand{display:flex;align-items:center;gap:10px;padding:2px 8px 20px;margin-bottom:20px;border-bottom:1px solid #eef1f5;}
+  .sidebar-logo{display:block;width:170px;height:54px;object-fit:contain;object-position:left center;}
   .brand-mark{width:36px;height:36px;border-radius:var(--radius-sm);background:var(--blue-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;letter-spacing:-.3px;}
   .brand{display:flex;align-items:baseline;gap:6px;font-weight:600;font-size:16px;}
   .brand .sub{font-size:10px;color:var(--text-muted);font-weight:600;letter-spacing:1px;}
@@ -231,6 +232,7 @@
     .app-layout{grid-template-columns:82px minmax(0,1fr);}
     .sidebar{padding:14px 10px;}
     .sidebar-brand{justify-content:center;padding:2px 0 16px;}
+    .sidebar-logo{width:44px;height:36px;object-position:center;}
     .sidebar-brand .brand,.sidebar-label,.tab-label{display:none;}
     .tab{justify-content:center;padding:12px 8px;}
     .tab:hover{transform:none;}
@@ -258,7 +260,7 @@
 <body>
 <div class="app-layout">
   <aside class="sidebar" aria-label="Navigation principale">
-    <div class="sidebar-brand"><div class="brand-mark">LE</div><div class="brand">LENI <span class="sub">EVENT TECH</span></div></div>
+    <div class="sidebar-brand"><img class="sidebar-logo" src="assets/logo-leni.png" alt="LENI Event Tech"></div>
     <div class="sidebar-label">Reporting</div>
     <nav class="tabs" id="tabs">
       <button class="tab active" data-view="top-affaires"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><span class="tab-label">Top affaires</span></button>
