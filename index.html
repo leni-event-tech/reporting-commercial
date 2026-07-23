@@ -166,6 +166,12 @@
   .kpi-card2 .val.pos{color:var(--green);} .kpi-card2 .val.neg{color:var(--red);}
   .kpi-card2 .delta-pct{display:block;font-size:12px;line-height:18px;font-weight:700;margin-top:2px;}
   .kpi-card2 .delta-pct.pos{color:var(--green);} .kpi-card2 .delta-pct.neg{color:var(--red);}
+  .detail-tooltip-card{position:relative;cursor:help;outline:none;}
+  .detail-tooltip-card:focus-visible{border-color:var(--blue-accent);box-shadow:0 0 0 3px rgba(0,37,98,.16),var(--shadow-card);}
+  .entity-tooltip{position:absolute;left:50%;bottom:calc(100% + 10px);z-index:50;width:max-content;max-width:min(300px,calc(100vw - 40px));padding:10px 12px;border-radius:var(--radius-sm);background:var(--navy);color:#fff;font-size:12px;line-height:18px;font-weight:500;box-shadow:0 10px 28px rgba(19,25,39,.22);opacity:0;visibility:hidden;transform:translate(-50%,6px);transition:opacity .16s ease,transform .16s ease,visibility .16s;pointer-events:none;}
+  .entity-tooltip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--navy);}
+  .entity-tooltip strong{display:block;margin-bottom:3px;color:var(--blue-horizon,#33c3ff);font-size:10px;letter-spacing:.4px;text-transform:uppercase;}
+  .detail-tooltip-card:hover .entity-tooltip,.detail-tooltip-card:focus .entity-tooltip,.detail-tooltip-card:focus-within .entity-tooltip{opacity:1;visibility:visible;transform:translate(-50%,0);}
   .top-share-list{display:grid;grid-template-columns:repeat(var(--share-count,3),minmax(150px,1fr));padding:4px 0 0;}
   .top-share-card{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:150px;padding:12px 24px;text-align:center;animation:view-enter .42s cubic-bezier(.2,.8,.2,1) var(--share-delay,0ms) both;}
   .top-share-card+.top-share-card{border-left:1px solid var(--border);}
@@ -854,14 +860,13 @@ function renderDADetail(){
       <div class="avatar-circle">🗂</div>
       <div class="detail-title-wrap">
         <div class="detail-title">${daSelected||'—'}</div>
-        <div class="detail-sub">${clients.length} client(s) • ${commerciaux.length} commercial(aux)</div>
       </div>
     </div>
     <div class="kpi-cards-row">
-      <div class="kpi-card2"><div class="lbl">CA total ${daPeriod}</div><div class="val">${fmtEuro(total)} €</div></div>
+      <div class="kpi-card2"><div class="lbl">CA total ${daPeriod}</div><div class="val">${fmtKe(total)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">Factures</div><div class="val">${txs.length}</div></div>
-      <div class="kpi-card2"><div class="lbl">Clients</div><div class="val">${clients.length}</div></div>
-      <div class="kpi-card2"><div class="lbl">Commerciaux</div><div class="val">${commerciaux.length}</div></div>
+      <div class="kpi-card2 detail-tooltip-card" tabindex="0" aria-label="Clients : ${esc(clients.join(', ')||'Aucun client')}"><div class="lbl">Clients</div><div class="val">${clients.length}</div><div class="entity-tooltip" role="tooltip"><strong>Détail des clients</strong>${clients.length?clients.map(name=>esc(name)).join('<br>'):'Aucun client'}</div></div>
+      <div class="kpi-card2 detail-tooltip-card" tabindex="0" aria-label="Commerciaux : ${esc(commerciaux.join(', ')||'Aucun commercial')}"><div class="lbl">Commerciaux</div><div class="val">${commerciaux.length}</div><div class="entity-tooltip" role="tooltip"><strong>Détail des commerciaux</strong>${commerciaux.length?commerciaux.map(name=>esc(name)).join('<br>'):'Aucun commercial'}</div></div>
     </div>
     <div class="panel">
       <div class="panel-head"><h3>Factures ${daPeriod} de l'affaire</h3></div>
