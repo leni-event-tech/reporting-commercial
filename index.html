@@ -584,7 +584,7 @@ function renderBaisseDetail(i){
       <div class="kpi-card2"><div class="lbl">CA 2026</div><div class="val">${fmt(b.m2026)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">CA 2025</div><div class="val">${fmt(b.m2025)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">Δ Valeur</div><div class="val neg">${fmtSigned(b.ecart)} k€</div></div>
-      <div class="kpi-card2"><div class="lbl">Δ Pourcentage</div><div class="val neg">${pct!==null?pct.toFixed(0)+'%':'—'}</div></div>
+      <div class="kpi-card2"><div class="lbl">Δ %</div><div class="val neg">${pct!==null?pct.toFixed(0)+'%':'—'}</div></div>
     </div>
     <div class="panel baisse-analysis"><div class="panel-head"><h3>Analyse commerciale</h3></div><div class="comment-box">Baisse de chiffre d'affaires classée #${i+1}</div></div>
   </div>`;
