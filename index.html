@@ -166,13 +166,14 @@
   .kpi-card2 .val.pos{color:var(--green);} .kpi-card2 .val.neg{color:var(--red);}
   .kpi-card2 .delta-pct{display:block;font-size:12px;line-height:18px;font-weight:700;margin-top:2px;}
   .kpi-card2 .delta-pct.pos{color:var(--green);} .kpi-card2 .delta-pct.neg{color:var(--red);}
-  .top-share-list{display:flex;flex-direction:column;gap:14px;padding-top:4px;}
-  .top-share-row{display:grid;grid-template-columns:minmax(150px,1fr) minmax(180px,2fr) 96px 54px;align-items:center;gap:14px;}
-  .top-share-name{font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .top-share-track{height:9px;border-radius:999px;background:#eef1f7;overflow:hidden;}
-  .top-share-fill{height:100%;border-radius:999px;background:var(--blue-accent);transform-origin:left center;animation:progress-fill .9s cubic-bezier(.22,1,.36,1) var(--bar-delay,0ms) both;}
-  .top-share-value,.top-share-pct{font-size:12px;font-weight:700;text-align:right;white-space:nowrap;}
-  .top-share-pct{color:var(--text-muted);}
+  .top-share-list{display:grid;grid-template-columns:repeat(var(--share-count,3),minmax(150px,1fr));padding:4px 0 0;}
+  .top-share-card{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:150px;padding:12px 24px;text-align:center;animation:view-enter .42s cubic-bezier(.2,.8,.2,1) var(--share-delay,0ms) both;}
+  .top-share-card+.top-share-card{border-left:1px solid var(--border);}
+  .top-share-icon{display:flex;align-items:center;justify-content:center;width:50px;height:50px;margin-bottom:8px;border-radius:50%;background:color-mix(in srgb,var(--share-color) 14%,white);color:var(--share-color);}
+  .top-share-icon svg{width:27px;height:27px;fill:currentColor;}
+  .top-share-name{max-width:100%;font-size:13px;line-height:18px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .top-share-value{margin-top:5px;color:var(--share-color);font-size:21px;line-height:28px;font-weight:800;white-space:nowrap;}
+  .top-share-pct{display:inline-flex;align-items:center;justify-content:center;min-width:76px;margin-top:6px;padding:5px 12px;border-radius:999px;background:color-mix(in srgb,var(--share-color) 13%,white);color:var(--share-color);font-size:12px;line-height:16px;font-weight:800;white-space:nowrap;}
 
   .panel{background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:20px;margin-bottom:16px;overflow-x:auto;box-shadow:var(--shadow-card);}
   .subtitle{font-size:12px;color:var(--text-muted);margin-bottom:12px;}
@@ -256,6 +257,9 @@
     #view-top-affaires .md-sidebar,
     #view-baisses .md-sidebar,
     #view-detail-affaires .md-sidebar{width:100%;flex:0 0 auto;}
+    .top-share-list{grid-template-columns:repeat(2,minmax(150px,1fr));}
+    .top-share-card:nth-child(odd){border-left:0;}
+    .top-share-card:nth-child(n+3){border-top:1px solid var(--border);}
   }
   @media(max-width:620px){
     .app-layout{grid-template-columns:66px minmax(0,1fr);}
@@ -268,8 +272,8 @@
     .pc-toolbar{grid-template-columns:1fr;}
     .rank-bar-wrap{width:70px;}
     .dashboard-header{align-items:flex-start;flex-direction:column;gap:8px;}
-    .top-share-row{grid-template-columns:minmax(110px,1fr) 80px 48px;}
-    .top-share-track{display:none;}
+    .top-share-list{grid-template-columns:1fr;}
+    .top-share-card+.top-share-card{border-left:0;border-top:1px solid var(--border);}
   }
 </style>
 </head>
@@ -496,15 +500,17 @@ function renderTopAffaireDetail(name){
     </div>
     <div class="panel">
       <div class="panel-head"><h3>Répartition du CA 2026 par commercial</h3></div>
-      <div class="top-share-list">
+      <div class="top-share-list" style="--share-count:${Math.min(a.commercial.length,4)}">
         ${a.commercial.map((c,index)=>{
           const [cname,v26] = c;
           const share = v26/totalComm*100;
-          return `<div class="top-share-row">
+          const shareColors = ['#0E5ECF','#1584AE','#862EDA','#11B081'];
+          const shareColor = shareColors[index%shareColors.length];
+          return `<div class="top-share-card" style="--share-color:${shareColor};--share-delay:${index*65}ms">
+            <div class="top-share-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
             <div class="top-share-name">${cname}</div>
-            <div class="top-share-track"><div class="top-share-fill" style="width:${Math.max(0,share)}%;--bar-delay:${index*65}ms"></div></div>
             <div class="top-share-value">${v26?fmt(v26)+' k€':'—'}</div>
-            <div class="top-share-pct">${share.toFixed(1).replace('.',',')}%</div>
+            <div class="top-share-pct">${share.toFixed(1).replace('.',',')} %</div>
           </div>`;
         }).join('')}
       </div>
