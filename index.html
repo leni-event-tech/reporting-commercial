@@ -700,7 +700,7 @@ function renderPCSidebar(){
   const filtered = getFilteredClients();
   const pag=paginate(filtered,pcListPage,PC_LIST_PER_PAGE);
   return `<div class="md-sidebar pc-list-panel">
-    <div class="pc-list-title"><div><h2>Performance CA par client</h2><p>Cliquez sur un CA 2026 ou 2025 pour afficher les factures qui le composent.</p></div><span class="md-count">${filtered.length} / ${allClientNames.length} clients</span></div>
+    <div class="pc-list-title"><div><h2>Performance CA par client</h2></div><span class="md-count">${filtered.length} / ${allClientNames.length} clients</span></div>
     <div class="pc-toolbar">
       <input type="search" id="pcSearchInput" placeholder="Rechercher un client..." value="${esc(pcSearch)}">
       <select id="pcTrendSelect" aria-label="Filtrer par évolution">
@@ -749,7 +749,7 @@ function renderPCDetail(){
     <button class="pc-back-button" id="pcBackButton" type="button">← Retour à la performance clients</button>
     <div class="detail-header">
       <div class="avatar-circle round">${initials(pcSelected)}</div>
-      <div class="detail-title-wrap"><div class="detail-title">${pcSelected}</div><div class="detail-sub">Factures composant le CA ${pcTxPeriod} • ${txs.length} ligne(s)</div></div>
+      <div class="detail-title-wrap"><div class="detail-title">${pcSelected}</div></div>
       <div class="pc-period-switch" id="pcPeriodSwitch">
         <button class="pc-period-button ${pcTxPeriod==='2026'?'active':''}" data-period="2026" type="button">CA 2026 · ${fmtKe(v26)} k€</button>
         <button class="pc-period-button ${pcTxPeriod==='2025'?'active':''}" data-period="2025" type="button">CA 2025 · ${fmtKe(v25)} k€</button>
