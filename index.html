@@ -48,8 +48,8 @@
   select:hover,input[type=search]:hover{border-color:#9ea2ae;}
   select:focus,input[type=search]:focus{border-color:var(--blue-accent);box-shadow:0 0 0 3px rgba(0,37,98,.16);}
   table{width:100%;border-collapse:collapse;font-size:12px;}
-  .invoice-table{min-width:1420px;}
-  th{text-align:left;color:var(--text-muted);font-size:10px;letter-spacing:.25px;text-transform:none;font-weight:600;padding:10px 11px;border-bottom:1px solid var(--border);background:#f9fafb;}
+  .invoice-table{min-width:1120px;}
+  th{text-align:left;color:var(--text-muted);font-size:11px;line-height:15px;letter-spacing:.25px;text-transform:none;font-weight:700;padding:10px 11px;border-bottom:1px solid var(--border);background:#f9fafb;}
   th.num,td.num{text-align:right;}
   td{padding:11px;border-bottom:1px solid var(--border);vertical-align:middle;}
   tr:last-child td{border-bottom:none;}
@@ -91,7 +91,7 @@
   .compare-item.active .compare-metric .m-value.neg{color:#ffb9c5;}
   .empty-state{padding:28px 12px;text-align:center;color:var(--text-muted);font-size:12px;}
 
-  /* ---------- Performance clients ---------- */
+  /* ---------- Performance CA par client ---------- */
   .pc-card{padding:16px;border:1px solid var(--border);border-radius:var(--radius-md);margin-bottom:8px;background:#fff;transition:border-color .15s,box-shadow .15s,background .15s;}
   .pc-card:hover{border-color:#cbd8ee;box-shadow:0 5px 16px rgba(15,31,61,.07);}
   .pc-card.active{background:var(--blue-accent);border-color:var(--blue-accent);box-shadow:0 8px 20px rgba(0,37,98,.20);}
@@ -237,7 +237,7 @@
   .contrib-section.down .trend-mark{background:var(--red-soft);color:var(--red);}
   .contrib-table-wrap{overflow-x:visible;}
   .contrib-table{width:100%;table-layout:fixed;}
-  .contrib-table th{padding:10px 8px;background:#f8fafc;font-size:9px;text-transform:uppercase;letter-spacing:.2px;white-space:nowrap;}
+  .contrib-table th{padding:10px 8px;background:#f8fafc;font-size:11px;line-height:15px;text-transform:none;letter-spacing:.25px;font-weight:700;white-space:nowrap;}
   .contrib-table td{padding:12px 8px;}
   .contrib-table th:first-child,.contrib-table td:first-child{width:30%;}
   .contrib-table th:not(:first-child),.contrib-table td:not(:first-child){width:17.5%;}
@@ -312,7 +312,7 @@
       <button class="tab active" data-view="top-affaires"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><span class="tab-label">Top affaires</span></button>
       <button class="tab" data-view="baisses"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 6l6 6 4-4 8 8"/><path d="M15 16h6v-6"/></svg></span><span class="tab-label">Baisses de CA</span></button>
       <button class="tab" data-view="contribution"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 19c0-3 2.7-5 6-5s6 2 6 5"/><path d="M14 15c.8-.7 1.9-1 3-1 2.4 0 4 1.5 4 4"/></svg></span><span class="tab-label">Performance CA par commerciale</span></button>
-      <button class="tab" data-view="performance-clients"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 21V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v16"/><path d="M9 21v-4h4v4M8 7h1m3 0h1M8 11h1m3 0h1M17 9h2a2 2 0 0 1 2 2v10"/></svg></span><span class="tab-label">Performance clients</span></button>
+      <button class="tab" data-view="performance-clients"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 21V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v16"/><path d="M9 21v-4h4v4M8 7h1m3 0h1M8 11h1m3 0h1M17 9h2a2 2 0 0 1 2 2v10"/></svg></span><span class="tab-label">Performance CA par client</span></button>
       <button class="tab" data-view="detail-affaires"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 12h7M9 16h7"/></svg></span><span class="tab-label">Détail par affaire</span></button>
       <button class="tab" data-view="detail-commerciaux"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></svg></span><span class="tab-label">Détail par commercial</span></button>
     </nav>
@@ -352,6 +352,8 @@ window.__DATA_PARTS = null;
 function fmt(n){ return Math.round(n).toLocaleString('fr-FR'); }
 function fmtSigned(n){ return (n>=0?'+':'') + Math.round(n).toLocaleString('fr-FR'); }
 function fmtEuro(n){ return n.toLocaleString('fr-FR',{maximumFractionDigits:0}); }
+function fmtKe(n){ return (Number(n||0)/1000).toLocaleString('fr-FR',{minimumFractionDigits:0,maximumFractionDigits:1}); }
+function fmtSignedKe(n){ return `${n>=0?'+':''}${fmtKe(n)}`; }
 function initials(name){
   return name.split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
 }
@@ -384,16 +386,8 @@ function dateKey(value){
 }
 function renderInvoiceRows(rows){
   return rows.map(t=>`<tr>
-    <td>${t[6]||'—'}</td>
-    <td>${t[7]||'—'}</td>
-    <td>${t[4]||'—'}</td>
-    <td>${t[5]||'—'}</td>
-    <td>${t[1]||'—'}</td>
-    <td class="num" style="font-weight:700;">${fmtEuro(t[3])} €</td>
-    <td>${t[8]||'—'}</td>
-    <td>${t[9]||'—'}</td>
-    <td>${t[0]||'—'}</td>
-    <td>${t[2]||'—'}</td>
+    <td>${t[6]||'—'}</td><td>${t[7]||'—'}</td><td>${t[4]||'—'}</td><td>${t[5]||'—'}</td><td>${t[1]||'—'}</td>
+    <td class="num" style="font-weight:700;">${fmtKe(t[3])} k€</td><td>${t[0]||'—'}</td><td>${t[2]||'—'}</td>
   </tr>`).join('');
 }
 const invoiceFieldConfig={
@@ -416,8 +410,8 @@ function invoiceSortHeader(field,label,sortField,sortDir){
 }
 function invoiceTable(rows, emptyMessage='Aucune facture pour cette période.',sortField='datefac',sortDir='desc'){
   return `<table class="invoice-table"><thead><tr>
-    <th>${invoiceSortHeader('logiciel','Logiciel',sortField,sortDir)}</th><th>${invoiceSortHeader('pays','Pays',sortField,sortDir)}</th><th>${invoiceSortHeader('datefac','Datefac',sortField,sortDir)}</th><th>${invoiceSortHeader('numfac','Numfac',sortField,sortDir)}</th><th>${invoiceSortHeader('affaire','Affaire',sortField,sortDir)}</th><th class="num">${invoiceSortHeader('montant','Mttventil',sortField,sortDir)}</th><th>${invoiceSortHeader('dateloc','Dateloc',sortField,sortDir)}</th><th>${invoiceSortHeader('datefin','Datefin',sortField,sortDir)}</th><th>${invoiceSortHeader('client','Nom du client modifié',sortField,sortDir)}</th><th>${invoiceSortHeader('commercial','Nom du commercial modifié',sortField,sortDir)}</th>
-  </tr></thead><tbody>${renderInvoiceRows(rows)||`<tr><td colspan="10" class="empty-state">${emptyMessage}</td></tr>`}</tbody></table>`;
+    <th>${invoiceSortHeader('logiciel','Logiciel',sortField,sortDir)}</th><th>${invoiceSortHeader('pays','Pays',sortField,sortDir)}</th><th>${invoiceSortHeader('datefac','Datefac',sortField,sortDir)}</th><th>${invoiceSortHeader('numfac','Numfac',sortField,sortDir)}</th><th>${invoiceSortHeader('affaire','Affaire',sortField,sortDir)}</th><th class="num">${invoiceSortHeader('montant','Montant HT',sortField,sortDir)}</th><th>${invoiceSortHeader('client','Client',sortField,sortDir)}</th><th>${invoiceSortHeader('commercial','Nom du commercial',sortField,sortDir)}</th>
+  </tr></thead><tbody>${renderInvoiceRows(rows)||`<tr><td colspan="8" class="empty-state">${emptyMessage}</td></tr>`}</tbody></table>`;
 }
 function nextInvoiceSort(field,currentField,currentDir){
   return {field,dir:field===currentField&&currentDir==='desc'?'asc':'desc'};
@@ -706,7 +700,7 @@ function renderPCSidebar(){
   const filtered = getFilteredClients();
   const pag=paginate(filtered,pcListPage,PC_LIST_PER_PAGE);
   return `<div class="md-sidebar pc-list-panel">
-    <div class="pc-list-title"><div><h2>Performance clients</h2><p>Cliquez sur un CA 2026 ou 2025 pour afficher les factures qui le composent.</p></div><span class="md-count">${filtered.length} / ${allClientNames.length} clients</span></div>
+    <div class="pc-list-title"><div><h2>Performance CA par client</h2><p>Cliquez sur un CA 2026 ou 2025 pour afficher les factures qui le composent.</p></div><span class="md-count">${filtered.length} / ${allClientNames.length} clients</span></div>
     <div class="pc-toolbar">
       <input type="search" id="pcSearchInput" placeholder="Rechercher un client..." value="${esc(pcSearch)}">
       <select id="pcTrendSelect" aria-label="Filtrer par évolution">
@@ -722,9 +716,9 @@ function renderPCSidebar(){
       <tbody>${pag.slice.map(name=>{
         const v26=clientTotal(name,'2026'), v25=clientTotal(name,'2025'), diff=v26-v25;
         return `<tr><td class="client-cell"><div class="pc-client-meta"><span>${name}</span></div></td>
-          <td class="num"><button class="pc-ca-link" data-name="${esc(name)}" data-period="2026" type="button" aria-label="Voir les factures 2026 de ${esc(name)}">${fmtEuro(v26)} €</button></td>
-          <td class="num"><button class="pc-ca-link" data-name="${esc(name)}" data-period="2025" type="button" aria-label="Voir les factures 2025 de ${esc(name)}">${fmtEuro(v25)} €</button></td>
-          <td class="num" style="font-weight:700;color:${diff>=0?'var(--green)':'var(--red)'};">${fmtSigned(diff)} €</td>
+          <td class="num"><button class="pc-ca-link" data-name="${esc(name)}" data-period="2026" type="button" aria-label="Voir les factures 2026 de ${esc(name)}">${fmtKe(v26)} k€</button></td>
+          <td class="num"><button class="pc-ca-link" data-name="${esc(name)}" data-period="2025" type="button" aria-label="Voir les factures 2025 de ${esc(name)}">${fmtKe(v25)} k€</button></td>
+          <td class="num" style="font-weight:700;color:${diff>=0?'var(--green)':'var(--red)'};">${fmtSignedKe(diff)} k€</td>
           <td class="num" style="font-weight:700;color:${diff>=0?'var(--green)':'var(--red)'};">${fmtPct(v26,v25)}</td></tr>`;
       }).join('') || '<tr><td colspan="5" class="empty-state">Aucun client ne correspond aux filtres.</td></tr>'}</tbody>
     </table></div><div class="pagination" id="pcListPagination"></div>
@@ -757,19 +751,19 @@ function renderPCDetail(){
       <div class="avatar-circle round">${initials(pcSelected)}</div>
       <div class="detail-title-wrap"><div class="detail-title">${pcSelected}</div><div class="detail-sub">Factures composant le CA ${pcTxPeriod} • ${txs.length} ligne(s)</div></div>
       <div class="pc-period-switch" id="pcPeriodSwitch">
-        <button class="pc-period-button ${pcTxPeriod==='2026'?'active':''}" data-period="2026" type="button">CA 2026 · ${fmtEuro(v26)} €</button>
-        <button class="pc-period-button ${pcTxPeriod==='2025'?'active':''}" data-period="2025" type="button">CA 2025 · ${fmtEuro(v25)} €</button>
+        <button class="pc-period-button ${pcTxPeriod==='2026'?'active':''}" data-period="2026" type="button">CA 2026 · ${fmtKe(v26)} k€</button>
+        <button class="pc-period-button ${pcTxPeriod==='2025'?'active':''}" data-period="2025" type="button">CA 2025 · ${fmtKe(v25)} k€</button>
       </div>
     </div>
     <div class="kpi-cards-row">
-      <div class="kpi-card2 ${pcTxPeriod==='2026'?'selected-period':''}"><div class="lbl">CA 2026</div><div class="val">${fmtEuro(v26)} €</div></div>
-      <div class="kpi-card2 ${pcTxPeriod==='2025'?'selected-period':''}"><div class="lbl">CA 2025</div><div class="val">${fmtEuro(v25)} €</div></div>
-      <div class="kpi-card2"><div class="lbl">Δ Valeur</div><div class="val ${diff>=0?'pos':'neg'}">${fmtSigned(diff)} €</div></div>
+      <div class="kpi-card2 ${pcTxPeriod==='2026'?'selected-period':''}"><div class="lbl">CA 2026</div><div class="val">${fmtKe(v26)} k€</div></div>
+      <div class="kpi-card2 ${pcTxPeriod==='2025'?'selected-period':''}"><div class="lbl">CA 2025</div><div class="val">${fmtKe(v25)} k€</div></div>
+      <div class="kpi-card2"><div class="lbl">Δ Valeur</div><div class="val ${diff>=0?'pos':'neg'}">${fmtSignedKe(diff)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">Δ %</div><div class="val ${diff>=0?'pos':'neg'}">${fmtPct(v26,v25)}</div></div>
     </div>
     <div class="panel">
       <div class="panel-head">
-        <div><h3>Détail des factures du CA ${pcTxPeriod}</h3><div class="subtitle">${txs.length} ligne(s) de facturation • Total : ${fmtEuro(selectedTotal)} €</div></div>
+        <div><h3>Détail des factures du CA ${pcTxPeriod}</h3><div class="subtitle">${txs.length} ligne(s) de facturation • Total : ${fmtKe(selectedTotal)} k€</div></div>
         <span class="tag new">Période sélectionnée : ${pcTxPeriod}</span>
       </div>
       ${invoiceTable(txPag.slice,'Aucune facture pour cette période.',pcInvoiceSortField,pcInvoiceSortDir)}<div class="pagination" id="pcTxPagination"></div>
