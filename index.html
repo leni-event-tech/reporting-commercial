@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tableau de bord LENI — Reporting Commercial 2026</title>
+<title>Reporting activités commerciales — LENI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -29,7 +29,9 @@
   .brand .sub{font-size:10px;color:var(--text-muted);font-weight:600;letter-spacing:1px;}
   .sidebar-label{padding:0 10px 8px;color:#98a2b3;font-size:9px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;}
   .container{width:100%;max-width:1680px;margin:0 auto;padding:28px 28px 54px;min-width:0;}
-  h1{font-size:24px;line-height:28px;margin:0 0 4px;font-weight:600;letter-spacing:0;}
+  h1{font-size:24px;line-height:28px;margin:0;font-weight:600;letter-spacing:0;}
+  .dashboard-header{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:22px;}
+  .dashboard-date{font-size:12px;font-weight:700;color:var(--blue-accent);background:var(--blue-soft);border-radius:999px;padding:7px 12px;white-space:nowrap;}
   .lede{color:var(--text-muted);font-size:12px;margin:0 0 22px;}
   .tabs{display:flex;flex-direction:column;gap:5px;}
   .tab{width:100%;display:flex;align-items:center;gap:12px;border:none;background:transparent;padding:12px;border-radius:var(--radius-sm);font-family:inherit;font-size:14px;line-height:16px;font-weight:500;color:var(--navy-light);cursor:pointer;text-align:left;transition:background .14s,color .14s,transform .14s;}
@@ -162,6 +164,15 @@
   .kpi-card2 .lbl{font-size:11px;color:var(--text-muted);font-weight:700;text-transform:uppercase;}
   .kpi-card2 .val{font-size:18px;line-height:28px;font-weight:600;margin-top:6px;}
   .kpi-card2 .val.pos{color:var(--green);} .kpi-card2 .val.neg{color:var(--red);}
+  .kpi-card2 .delta-pct{display:block;font-size:12px;line-height:18px;font-weight:700;margin-top:2px;}
+  .kpi-card2 .delta-pct.pos{color:var(--green);} .kpi-card2 .delta-pct.neg{color:var(--red);}
+  .top-share-list{display:flex;flex-direction:column;gap:14px;padding-top:4px;}
+  .top-share-row{display:grid;grid-template-columns:minmax(150px,1fr) minmax(180px,2fr) 96px 54px;align-items:center;gap:14px;}
+  .top-share-name{font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .top-share-track{height:9px;border-radius:999px;background:#eef1f7;overflow:hidden;}
+  .top-share-fill{height:100%;border-radius:999px;background:var(--blue-accent);transform-origin:left center;animation:progress-fill .9s cubic-bezier(.22,1,.36,1) var(--bar-delay,0ms) both;}
+  .top-share-value,.top-share-pct{font-size:12px;font-weight:700;text-align:right;white-space:nowrap;}
+  .top-share-pct{color:var(--text-muted);}
 
   .panel{background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:20px;margin-bottom:16px;overflow-x:auto;box-shadow:var(--shadow-card);}
   .subtitle{font-size:12px;color:var(--text-muted);margin-bottom:12px;}
@@ -256,6 +267,9 @@
     .pc-card-grid{grid-template-columns:1fr 1fr;}
     .pc-toolbar{grid-template-columns:1fr;}
     .rank-bar-wrap{width:70px;}
+    .dashboard-header{align-items:flex-start;flex-direction:column;gap:8px;}
+    .top-share-row{grid-template-columns:minmax(110px,1fr) 80px 48px;}
+    .top-share-track{display:none;}
   }
 </style>
 </head>
@@ -274,8 +288,10 @@
     </nav>
   </aside>
   <main class="container">
-  <h1>Tableau de bord LENI — Reporting Commercial</h1>
-  <p class="lede">Données consolidées à fin juin 2026, issues du fichier de reporting commercial.</p>
+  <div class="dashboard-header">
+    <h1>Reporting activités commerciales</h1>
+    <div class="dashboard-date">À fin juin 2026</div>
+  </div>
 
   <div class="view active" id="view-top-affaires"></div>
   <div class="view" id="view-baisses"></div>
@@ -284,7 +300,6 @@
   <div class="view" id="view-detail-affaires"></div>
   <div class="view" id="view-detail-commerciaux"></div>
 
-  <div class="footnote">Données issues du reporting commercial LENI — Consolidation 2025 / 2026.</div>
   </main>
 </div>
 
@@ -431,9 +446,9 @@ function renderTopAffairesSidebar(){
     <div class="md-sidebar-head"><h3>Top 10 affaires</h3><span class="md-count">${list.length}</span></div>
     <div class="md-list no-scroll-list">
       ${list.map(a=>{
-        const tag = a.v2025===0 ? '<span class="tag new">Nouvelle</span>' : '';
+        const tag = a.v2025===0 ? '<span class="tag new">Nouvelle affaire</span>' : '';
         return `<div class="md-item ${a.name===topAffaireSelected?'active':''}" data-name="${esc(a.name)}">
-          <div><div class="name">#${a.rank} ${a.name}</div></div>
+          <div><div class="name">${a.rank} ${a.name}</div></div>
           ${tag}
         </div>`;
       }).join('')}
@@ -448,39 +463,52 @@ function renderTopAffaireDetail(name){
   const totalComm = a.commercial.reduce((s,c)=>s+c[1],0)||1;
   return `<div class="md-detail">
     <div class="detail-header">
-      <div class="avatar-circle">#${a.rank}</div>
+      <div class="avatar-circle">${a.rank}</div>
       <div class="detail-title-wrap">
         <div class="detail-title">${a.name}</div>
-        <div class="detail-sub">${a.commercial.length} commercial(aux) impliqué(s) ${a.note?' • '+a.note:''}</div>
       </div>
     </div>
     <div class="kpi-cards-row">
       <div class="kpi-card2"><div class="lbl">CA 2026</div><div class="val">${fmt(a.v2026)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">CA 2025</div><div class="val">${fmt(a.v2025)} k€</div></div>
-      <div class="kpi-card2"><div class="lbl">Δ Valeur</div><div class="val ${diff>=0?'pos':'neg'}">${fmtSigned(diff)} k€</div></div>
-      <div class="kpi-card2"><div class="lbl">Évolution</div><div class="val ${diff>=0?'pos':'neg'}">${evo!==null?(evo>=0?'+':'')+evo.toFixed(0)+'%':'—'}</div></div>
+      <div class="kpi-card2"><div class="lbl">Δ Valeur</div><div class="val ${diff>=0?'pos':'neg'}">${diff>=0?'▲':'▼'} ${fmtSigned(diff)} k€</div><span class="delta-pct ${diff>=0?'pos':'neg'}">${evo!==null?(evo>=0?'+':'')+evo.toFixed(0)+'%':'—'}</span></div>
+      <div class="kpi-card2"><div class="lbl">Budget</div><div class="val">&nbsp;</div></div>
     </div>
     <div class="panel">
-      <div class="panel-head"><h3>Répartition par commercial</h3></div>
+      <div class="panel-head"><h3>Comparatif par commercial</h3></div>
       <table>
-        <thead><tr><th>Commercial</th><th class="num">CA 2026</th><th class="num">CA 2025</th><th class="num">Δ Valeur</th><th class="num">% de l'affaire</th></tr></thead>
+        <thead><tr><th>Commercial</th><th class="num">CA 2026</th><th class="num">CA 2025</th><th class="num">Δ Valeur</th><th class="num">Δ % (2026 - CA 2025)</th></tr></thead>
         <tbody>
           ${a.commercial.map(c=>{
             const [cname,v26,v25] = c;
             const ecart = v26-v25;
-            const pct = (v26/totalComm*100).toFixed(0);
+            const deltaPct = v25!==0 ? (ecart/v25*100) : null;
             return `<tr>
               <td><div style="display:flex;align-items:center;gap:8px;"><div class="avatar-circle round" style="width:28px;height:28px;font-size:11px;">${initials(cname)}</div>${cname}</div></td>
               <td class="num" style="font-weight:700;color:var(--blue-accent);">${v26?fmt(v26)+' k€':'–'}</td>
               <td class="num">${v25?fmt(v25)+' k€':'–'}</td>
               <td class="num" style="font-weight:700;color:${ecart>=0?'var(--green)':'var(--red)'};">${fmtSigned(ecart)} k€</td>
-              <td class="num">${v26?pct+'%':'–'}</td>
+              <td class="num" style="font-weight:700;color:${deltaPct===null?'var(--text-muted)':ecart>=0?'var(--green)':'var(--red)'};">${deltaPct===null?'—':`${deltaPct>=0?'+':''}${deltaPct.toFixed(1).replace('.',',')}%`}</td>
             </tr>`;
           }).join('')}
         </tbody>
       </table>
     </div>
-    ${a.comment?`<div class="panel"><div class="panel-head"><h3>💬 Analyse</h3></div><div class="comment-box">${a.comment}</div></div>`:''}
+    <div class="panel">
+      <div class="panel-head"><h3>Répartition du CA 2026 par commercial</h3></div>
+      <div class="top-share-list">
+        ${a.commercial.map((c,index)=>{
+          const [cname,v26] = c;
+          const share = v26/totalComm*100;
+          return `<div class="top-share-row">
+            <div class="top-share-name">${cname}</div>
+            <div class="top-share-track"><div class="top-share-fill" style="width:${Math.max(0,share)}%;--bar-delay:${index*65}ms"></div></div>
+            <div class="top-share-value">${v26?fmt(v26)+' k€':'—'}</div>
+            <div class="top-share-pct">${share.toFixed(1).replace('.',',')}%</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
   </div>`;
 }
 function renderTopAffairesView(){
