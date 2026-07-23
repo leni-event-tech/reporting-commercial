@@ -166,22 +166,12 @@
   .kpi-card2 .val.pos{color:var(--green);} .kpi-card2 .val.neg{color:var(--red);}
   .kpi-card2 .delta-pct{display:block;font-size:12px;line-height:18px;font-weight:700;margin-top:2px;}
   .kpi-card2 .delta-pct.pos{color:var(--green);} .kpi-card2 .delta-pct.neg{color:var(--red);}
-  .entity-card{--entity-color:var(--blue-accent);padding:0;overflow:hidden;border-top:3px solid var(--entity-color);align-self:start;}
-  .entity-card.clients{--entity-color:#0E5ECF;}
-  .entity-card.commerciaux{--entity-color:#862EDA;}
-  .entity-card-toggle{width:100%;display:block;border:0;background:transparent;padding:14px 16px;text-align:left;color:inherit;font-family:inherit;cursor:pointer;}
-  .entity-card-toggle:focus-visible{outline:3px solid color-mix(in srgb,var(--entity-color) 28%,transparent);outline-offset:-3px;}
-  .entity-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
-  .entity-card .val{color:var(--entity-color);}
-  .entity-chevron{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;margin-top:1px;border-radius:50%;background:color-mix(in srgb,var(--entity-color) 11%,white);color:var(--entity-color);font-size:15px;font-weight:800;transition:transform .22s ease,background-color .2s ease;}
-  .entity-card.is-open .entity-chevron{transform:rotate(180deg);background:color-mix(in srgb,var(--entity-color) 18%,white);}
-  .entity-preview{display:flex;flex-direction:column;gap:5px;margin-top:10px;}
-  .entity-preview-row{font-size:11px;line-height:16px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .entity-more{align-self:flex-start;margin-top:1px;padding:3px 8px;border-radius:999px;background:color-mix(in srgb,var(--entity-color) 11%,white);color:var(--entity-color);font-size:10px;line-height:14px;font-weight:800;}
-  .entity-full-list{max-height:0;overflow:hidden;opacity:0;border-top:1px solid transparent;transition:max-height .28s cubic-bezier(.2,.8,.2,1),opacity .2s ease,border-color .2s ease;}
-  .entity-card.is-open .entity-full-list{max-height:280px;opacity:1;border-top-color:var(--border);overflow-y:auto;}
-  .entity-full-list-inner{display:flex;flex-direction:column;gap:6px;padding:12px 16px 15px;}
-  .entity-full-row{padding:7px 9px;border-radius:7px;background:color-mix(in srgb,var(--entity-color) 7%,white);color:var(--text);font-size:11px;line-height:16px;font-weight:600;}
+  .detail-tooltip-card{position:relative;cursor:help;outline:none;}
+  .detail-tooltip-card:focus-visible{border-color:var(--blue-accent);box-shadow:0 0 0 3px rgba(0,37,98,.16),var(--shadow-card);}
+  .entity-tooltip{position:absolute;left:50%;bottom:calc(100% + 10px);z-index:50;width:max-content;max-width:min(300px,calc(100vw - 40px));padding:10px 12px;border-radius:var(--radius-sm);background:var(--navy);color:#fff;font-size:12px;line-height:18px;font-weight:500;box-shadow:0 10px 28px rgba(19,25,39,.22);opacity:0;visibility:hidden;transform:translate(-50%,6px);transition:opacity .16s ease,transform .16s ease,visibility .16s;pointer-events:none;}
+  .entity-tooltip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--navy);}
+  .entity-tooltip strong{display:block;margin-bottom:3px;color:var(--blue-horizon,#33c3ff);font-size:10px;letter-spacing:.4px;text-transform:uppercase;}
+  .detail-tooltip-card:hover .entity-tooltip,.detail-tooltip-card:focus .entity-tooltip,.detail-tooltip-card:focus-within .entity-tooltip{opacity:1;visibility:visible;transform:translate(-50%,0);}
   .top-share-list{display:grid;grid-template-columns:repeat(var(--share-count,3),minmax(150px,1fr));padding:4px 0 0;}
   .top-share-card{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:150px;padding:12px 24px;text-align:center;animation:view-enter .42s cubic-bezier(.2,.8,.2,1) var(--share-delay,0ms) both;}
   .top-share-card+.top-share-card{border-left:1px solid var(--border);}
@@ -316,9 +306,6 @@
     .dashboard-header{align-items:flex-start;flex-direction:column;gap:8px;}
     .top-share-list{grid-template-columns:1fr;}
     .top-share-card+.top-share-card{border-left:0;border-top:1px solid var(--border);}
-  }
-  @media (prefers-reduced-motion:reduce){
-    .entity-chevron,.entity-full-list{transition:none;}
   }
 </style>
 </head>
@@ -861,17 +848,6 @@ function renderDASidebar(){
     </div>
   </div>`;
 }
-function entityExpandableCard(kind,label,names){
-  const safeNames=names.length?names:['Aucun'];
-  const extra=Math.max(0,names.length-2);
-  return `<div class="kpi-card2 entity-card ${kind}" data-entity-card="${kind}">
-    <button class="entity-card-toggle" type="button" aria-expanded="false" aria-controls="entity-list-${kind}">
-      <span class="entity-card-head"><span><span class="lbl">${label}</span><span class="val">${names.length}</span></span><span class="entity-chevron" aria-hidden="true">⌄</span></span>
-      <span class="entity-preview">${safeNames.slice(0,2).map(name=>`<span class="entity-preview-row" title="${esc(name)}">${esc(name)}</span>`).join('')}${extra?`<span class="entity-more">+${extra} autre${extra>1?'s':''}</span>`:''}</span>
-    </button>
-    <div class="entity-full-list" id="entity-list-${kind}"><div class="entity-full-list-inner">${safeNames.map(name=>`<div class="entity-full-row">${esc(name)}</div>`).join('')}</div></div>
-  </div>`;
-}
 function renderDADetail(){
   const index=getAffaireIndex();
   const txs = sortInvoices(index[daSelected]||[],daInvoiceSortField,daInvoiceSortDir);
@@ -889,8 +865,8 @@ function renderDADetail(){
     <div class="kpi-cards-row">
       <div class="kpi-card2"><div class="lbl">CA total ${daPeriod}</div><div class="val">${fmtKe(total)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">Factures</div><div class="val">${txs.length}</div></div>
-      ${entityExpandableCard('clients','Clients',clients)}
-      ${entityExpandableCard('commerciaux','Commerciaux',commerciaux)}
+      <div class="kpi-card2 detail-tooltip-card" tabindex="0" aria-label="Clients : ${esc(clients.join(', ')||'Aucun client')}"><div class="lbl">Clients</div><div class="val">${clients.length}</div><div class="entity-tooltip" role="tooltip"><strong>Détail des clients</strong>${clients.length?clients.map(name=>esc(name)).join('<br>'):'Aucun client'}</div></div>
+      <div class="kpi-card2 detail-tooltip-card" tabindex="0" aria-label="Commerciaux : ${esc(commerciaux.join(', ')||'Aucun commercial')}"><div class="lbl">Commerciaux</div><div class="val">${commerciaux.length}</div><div class="entity-tooltip" role="tooltip"><strong>Détail des commerciaux</strong>${commerciaux.length?commerciaux.map(name=>esc(name)).join('<br>'):'Aucun commercial'}</div></div>
     </div>
     <div class="panel">
       <div class="panel-head"><h3>Factures ${daPeriod} de l'affaire</h3></div>
@@ -904,20 +880,6 @@ function renderDAView(){
   el.innerHTML = `<div class="master-detail">${renderDASidebar()}${renderDADetail()}</div>`;
   el.querySelectorAll('.md-item').forEach(item=>{
     item.addEventListener('click', ()=>{ daSelected = item.dataset.name; daPage=1; renderDAView(); });
-  });
-  el.querySelectorAll('.entity-card-toggle').forEach(button=>{
-    button.addEventListener('click',()=>{
-      const card=button.closest('.entity-card');
-      const willOpen=!card.classList.contains('is-open');
-      el.querySelectorAll('.entity-card.is-open').forEach(openCard=>{
-        openCard.classList.remove('is-open');
-        openCard.querySelector('.entity-card-toggle').setAttribute('aria-expanded','false');
-      });
-      if(willOpen){
-        card.classList.add('is-open');
-        button.setAttribute('aria-expanded','true');
-      }
-    });
   });
   document.querySelectorAll('#daPeriodSwitch button').forEach(button=>button.addEventListener('click',()=>{
     daPeriod=button.dataset.period;
