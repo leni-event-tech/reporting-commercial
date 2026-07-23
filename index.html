@@ -177,6 +177,20 @@
   .entity-tooltip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--navy);}
   .entity-tooltip strong{display:block;margin-bottom:3px;color:var(--blue-horizon,#33c3ff);font-size:10px;letter-spacing:.4px;text-transform:uppercase;}
   .detail-tooltip-card:hover .entity-tooltip,.detail-tooltip-card:focus .entity-tooltip,.detail-tooltip-card:focus-within .entity-tooltip{opacity:1;visibility:visible;transform:translate(-50%,0);}
+  .detail-entity-link{position:relative;width:100%;border:1px solid var(--border);background:#fff;text-align:left;font-family:inherit;color:var(--text);cursor:pointer;}
+  .detail-entity-link:hover{border-color:var(--blue-accent);background:var(--blue-soft);transform:translateY(-2px);}
+  .detail-entity-link:focus-visible{outline:3px solid rgba(0,37,98,.18);outline-offset:2px;}
+  .detail-entity-action{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:7px;color:var(--blue-accent);font-size:11px;line-height:16px;font-weight:700;}
+  .detail-entity-action span:last-child{font-size:16px;}
+  .entity-page{width:100%;}
+  .entity-page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap;}
+  .entity-page-head h2{margin:0 0 4px;font-size:20px;line-height:28px;}
+  .entity-page-head p{margin:0;color:var(--text-muted);font-size:12px;}
+  .entity-page-toolbar{display:grid;grid-template-columns:minmax(240px,420px) auto;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;}
+  .entity-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+  .entity-list-item{display:flex;align-items:center;gap:12px;min-height:54px;padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;}
+  .entity-list-index{display:flex;align-items:center;justify-content:center;width:28px;height:28px;flex:0 0 28px;border-radius:8px;background:var(--blue-soft);color:var(--blue-accent);font-size:11px;font-weight:800;}
+  .entity-list-name{min-width:0;font-size:14px;line-height:20px;font-weight:600;overflow-wrap:anywhere;}
   .top-share-list{display:grid;grid-template-columns:repeat(var(--share-count,3),minmax(150px,1fr));padding:4px 0 0;}
   .top-share-card{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:150px;padding:12px 24px;text-align:center;animation:view-enter .42s cubic-bezier(.2,.8,.2,1) var(--share-delay,0ms) both;}
   .top-share-card+.top-share-card{border-left:1px solid var(--border);}
@@ -251,9 +265,9 @@
   .contrib-table th{padding:12px var(--table-cell-x);background:var(--table-head-bg);font-size:var(--table-head-size);line-height:16px;text-transform:none;letter-spacing:0;font-weight:var(--table-head-weight);white-space:nowrap;}
   .contrib-table td{padding:var(--table-cell-y) var(--table-cell-x);}
   .contrib-table th:first-child,.contrib-table td:first-child{width:30%;}
-  .contrib-table th:not(:first-child),.contrib-table td:not(:first-child){width:17.5%;}
+  .contrib-table th:not(:first-child),.contrib-table td:not(:first-child){width:23.333%;}
   .contrib-table.top5 th:first-child,.contrib-table.top5 td:first-child{width:34%;}
-  .contrib-table.top5 th:not(:first-child),.contrib-table.top5 td:not(:first-child){width:22%;}
+  .contrib-table.top5 th:not(:first-child),.contrib-table.top5 td:not(:first-child){width:33%;}
   .contrib-table tbody tr{animation:view-enter .32s ease var(--row-delay,0ms) both;}
   .commercial-name{font-weight:var(--table-emphasis-weight);}
   .contrib-rank{display:inline-flex;align-items:center;justify-content:center;width:25px;height:25px;margin-right:9px;border-radius:8px;background:var(--blue-soft);color:var(--blue-accent);font-size:11px;font-weight:800;}
@@ -311,6 +325,7 @@
     .dashboard-header{align-items:flex-start;flex-direction:column;gap:8px;}
     .top-share-list{grid-template-columns:1fr;}
     .top-share-card+.top-share-card{border-left:0;border-top:1px solid var(--border);}
+    .entity-page-toolbar,.entity-list{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -590,7 +605,7 @@ function renderBaisseDetail(i){
       <div class="kpi-card2"><div class="lbl">Δ Valeur</div><div class="val neg">${fmtSigned(b.ecart)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">Δ %</div><div class="val neg">${pct!==null?pct.toFixed(0)+'%':'—'}</div></div>
     </div>
-    <div class="panel baisse-analysis"><div class="panel-head"><h3>Analyse commerciale</h3></div><div class="comment-box">Baisse de chiffre d'affaires classée #${i+1}</div></div>
+    <div class="panel baisse-analysis"><div class="panel-head"><h3>Commentaire</h3></div><div class="comment-box">Baisse de chiffre d'affaires classée #${i+1}</div></div>
   </div>`;
 }
 function renderBaissesView(){
@@ -611,14 +626,13 @@ function contributionRows(rows, isTop5=false){
       <td class="commercial-name">${isTop5?`<span class="contrib-rank">${idx+1}</span>`:''}${name}</td>
       <td class="num ca-cell">${fmt(v25)} k€</td>
       <td class="num ca-cell">${fmt(v26)} k€</td>
-      <td class="num delta-cell ${tone}">${fmtSigned(varAbs)} k€</td>
       ${isTop5?'':`<td class="num delta-cell ${tone}">${pctTxt}</td>`}
     </tr>`;
   }).join('');
 }
 function contributionTable(rows,isTop5=false){
   return `<div class="contrib-table-wrap"><table class="contrib-table ${isTop5?'top5':''}">
-    <thead><tr><th>Nom commercial</th><th class="num">CA 2025</th><th class="num">CA 2026</th><th class="num">Δ valeur</th>${isTop5?'':'<th class="num">Δ %</th>'}</tr></thead>
+    <thead><tr><th>Nom commercial</th><th class="num">CA 2025</th><th class="num">CA 2026</th>${isTop5?'':'<th class="num">Δ %</th>'}</tr></thead>
     <tbody>${contributionRows(rows,isTop5)}</tbody>
   </table></div>`;
 }
@@ -828,7 +842,42 @@ let daSearch = '';
 let daPage = 1;
 let daInvoiceSortField = 'datefac';
 let daInvoiceSortDir = 'desc';
+let daEntityMode = null;
+let daEntitySearch = '';
+let daEntityPage = 1;
 const DA_PER_PAGE = 8;
+const DA_ENTITY_PER_PAGE = 24;
+
+function daEntityCard(label,items,type){
+  if(items.length<=3){
+    const emptyLabel=type==='clients'?'Aucun client':'Aucun commercial';
+    return `<div class="kpi-card2 detail-tooltip-card" tabindex="0" aria-label="${label} : ${esc(items.join(', ')||emptyLabel)}"><div class="lbl">${label}</div><div class="val">${items.length}</div><div class="entity-tooltip" role="tooltip"><strong>Détail des ${label.toLowerCase()}</strong>${items.length?items.map(name=>esc(name)).join('<br>'):emptyLabel}</div></div>`;
+  }
+  return `<button class="kpi-card2 detail-entity-link" type="button" data-da-entity="${type}" aria-label="Voir les ${items.length} ${label.toLowerCase()}"><div class="lbl">${label}</div><div class="val">${items.length}</div><div class="detail-entity-action"><span>Voir la liste</span><span aria-hidden="true">→</span></div></button>`;
+}
+
+function getDAEntities(type){
+  const txs=getAffaireIndex()[daSelected]||[];
+  const keyIndex=type==='clients'?0:2;
+  return [...new Set(txs.map(t=>t[keyIndex]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'fr'));
+}
+
+function renderDAEntityPage(){
+  const label=daEntityMode==='clients'?'Clients':'Commerciaux';
+  const all=getDAEntities(daEntityMode);
+  const query=daEntitySearch.trim().toLowerCase();
+  const filtered=all.filter(name=>name.toLowerCase().includes(query));
+  const pag=paginate(filtered,daEntityPage,DA_ENTITY_PER_PAGE);
+  return `<div class="entity-page">
+    <button class="pc-back-button" id="daEntityBack" type="button">← Retour au détail de l'affaire</button>
+    <div class="panel">
+      <div class="entity-page-head"><div><h2>${label}</h2><p>${esc(daSelected||'—')} · ${daPeriod}</p></div><span class="md-count">${filtered.length} / ${all.length}</span></div>
+      <div class="entity-page-toolbar"><input type="search" id="daEntitySearch" placeholder="Rechercher ${daEntityMode==='clients'?'un client':'un commercial'}..." value="${esc(daEntitySearch)}"><span class="subtitle">${all.length} ${label.toLowerCase()}</span></div>
+      <div class="entity-list">${pag.slice.map((name,index)=>`<div class="entity-list-item"><span class="entity-list-index">${(pag.page-1)*DA_ENTITY_PER_PAGE+index+1}</span><span class="entity-list-name">${esc(name)}</span></div>`).join('')||'<div class="empty-state">Aucun résultat.</div>'}</div>
+      <div class="pagination" id="daEntityPagination"></div>
+    </div>
+  </div>`;
+}
 
 function renderDASidebar(){
   const index=getAffaireIndex();
@@ -869,8 +918,8 @@ function renderDADetail(){
     <div class="kpi-cards-row">
       <div class="kpi-card2"><div class="lbl">CA total ${daPeriod}</div><div class="val">${fmtKe(total)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">Factures</div><div class="val">${txs.length}</div></div>
-      <div class="kpi-card2 detail-tooltip-card" tabindex="0" aria-label="Clients : ${esc(clients.join(', ')||'Aucun client')}"><div class="lbl">Clients</div><div class="val">${clients.length}</div><div class="entity-tooltip" role="tooltip"><strong>Détail des clients</strong>${clients.length?clients.map(name=>esc(name)).join('<br>'):'Aucun client'}</div></div>
-      <div class="kpi-card2 detail-tooltip-card" tabindex="0" aria-label="Commerciaux : ${esc(commerciaux.join(', ')||'Aucun commercial')}"><div class="lbl">Commerciaux</div><div class="val">${commerciaux.length}</div><div class="entity-tooltip" role="tooltip"><strong>Détail des commerciaux</strong>${commerciaux.length?commerciaux.map(name=>esc(name)).join('<br>'):'Aucun commercial'}</div></div>
+      ${daEntityCard('Clients',clients,'clients')}
+      ${daEntityCard('Commerciaux',commerciaux,'commerciaux')}
     </div>
     <div class="panel">
       <div class="panel-head"><h3>Factures ${daPeriod} de l'affaire</h3></div>
@@ -881,10 +930,20 @@ function renderDADetail(){
 }
 function renderDAView(){
   const el = document.getElementById('view-detail-affaires');
+  if(daEntityMode){
+    el.innerHTML=renderDAEntityPage();
+    document.getElementById('daEntityBack').addEventListener('click',()=>{daEntityMode=null;daEntitySearch='';daEntityPage=1;renderDAView();});
+    const entitySearch=document.getElementById('daEntitySearch');
+    entitySearch.addEventListener('input',()=>{const position=entitySearch.selectionStart;daEntitySearch=entitySearch.value;daEntityPage=1;renderDAView();refocusSearch('daEntitySearch',position);});
+    const entityCount=getDAEntities(daEntityMode).filter(name=>name.toLowerCase().includes(daEntitySearch.trim().toLowerCase())).length;
+    renderPagination('daEntityPagination',daEntityPage,Math.max(1,Math.ceil(entityCount/DA_ENTITY_PER_PAGE)),p=>{daEntityPage=p;renderDAView();});
+    return;
+  }
   el.innerHTML = `<div class="master-detail">${renderDASidebar()}${renderDADetail()}</div>`;
   el.querySelectorAll('.md-item').forEach(item=>{
-    item.addEventListener('click', ()=>{ daSelected = item.dataset.name; daPage=1; renderDAView(); });
+    item.addEventListener('click', ()=>{ daSelected = item.dataset.name; daPage=1; daEntityMode=null; renderDAView(); });
   });
+  el.querySelectorAll('[data-da-entity]').forEach(button=>button.addEventListener('click',()=>{daEntityMode=button.dataset.daEntity;daEntitySearch='';daEntityPage=1;renderDAView();}));
   document.querySelectorAll('#daPeriodSwitch button').forEach(button=>button.addEventListener('click',()=>{
     daPeriod=button.dataset.period;
     daSearch='';
