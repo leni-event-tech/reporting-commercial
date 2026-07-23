@@ -602,8 +602,8 @@ function contributionRows(rows, isTop5=false){
     const pctTxt=pct===null?'—':`${pct>=0?'+':''}${(pct*100).toFixed(0)}%`;
     return `<tr style="--row-delay:${idx*45}ms">
       <td class="commercial-name">${isTop5?`<span class="contrib-rank">${idx+1}</span>`:''}${name}</td>
-      <td class="num">${fmt(v25)} k€</td>
-      <td class="num"><strong>${fmt(v26)} k€</strong></td>
+      <td class="num ca-cell">${fmt(v25)} k€</td>
+      <td class="num ca-cell">${fmt(v26)} k€</td>
       <td class="num delta-cell ${tone}">${fmtSigned(varAbs)} k€</td>
       ${isTop5?'':`<td class="num delta-cell ${tone}">${pctTxt}</td>`}
     </tr>`;
@@ -611,7 +611,7 @@ function contributionRows(rows, isTop5=false){
 }
 function contributionTable(rows,isTop5=false){
   return `<div class="contrib-table-wrap"><table class="contrib-table ${isTop5?'top5':''}">
-    <thead><tr><th>Nom commercial</th><th class="num">CA 2025</th><th class="num">CA 2026</th><th class="num">Delta valeur</th>${isTop5?'':'<th class="num">Delta pourcentage</th>'}</tr></thead>
+    <thead><tr><th>Nom commercial</th><th class="num">CA 2025</th><th class="num">CA 2026</th><th class="num">Δ Valeur</th>${isTop5?'':'<th class="num">Δ Pourcentage</th>'}</tr></thead>
     <tbody>${contributionRows(rows,isTop5)}</tbody>
   </table></div>`;
 }
