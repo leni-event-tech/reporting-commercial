@@ -386,6 +386,7 @@ function initials(name){
 }
 function naturalClientName(name){
   const value=String(name||'—').trim();
+  if(/^PALAIS DU PHARO\b/.test(value)) return value.replace(/^PALAIS DU PHARO/,'Palais du Pharo');
   if(!/[A-ZÀ-ÖØ-Þ]{3}/.test(value) || value!==value.toUpperCase()) return value;
   const smallWords=new Set(['de','du','des','la','le','les','et','en','à','au','aux']);
   return value.toLocaleLowerCase('fr-FR').replace(/(^|[\s'’(/-])([\p{L}\p{N}]+)/gu,(match,separator,word,offset)=>{
