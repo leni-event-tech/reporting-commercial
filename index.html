@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reporting activités commerciales — LENI</title>
+<title>Reporting activité commerciale — LENI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -168,6 +168,8 @@
   .kpi-card2{background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;box-shadow:var(--shadow-card);}
   .kpi-card2 .lbl{font-size:11px;color:var(--text-muted);font-weight:700;text-transform:uppercase;}
   .kpi-card2 .val{font-size:18px;line-height:28px;font-weight:600;margin-top:6px;}
+  .kpi-card2.is-unavailable{background:#f3f4f6;border-color:#e1e4e8;box-shadow:none;}
+  .kpi-card2.is-unavailable .lbl,.kpi-card2.is-unavailable .val{color:#9aa0aa;}
   .kpi-card2 .val.pos{color:var(--green);} .kpi-card2 .val.neg{color:var(--red);}
   .kpi-card2 .delta-pct{display:block;font-size:12px;line-height:18px;font-weight:700;margin-top:2px;}
   .kpi-card2 .delta-pct.pos{color:var(--green);} .kpi-card2 .delta-pct.neg{color:var(--red);}
@@ -197,7 +199,7 @@
   .top-share-icon{display:flex;align-items:center;justify-content:center;width:50px;height:50px;margin-bottom:8px;border-radius:50%;background:color-mix(in srgb,var(--share-color) 14%,white);color:var(--share-color);}
   .top-share-icon svg{width:27px;height:27px;fill:currentColor;}
   .top-share-name{max-width:100%;font-size:13px;line-height:18px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .top-share-value{margin-top:5px;color:var(--share-color);font-size:21px;line-height:28px;font-weight:800;white-space:nowrap;}
+  .top-share-value{margin-top:5px;color:var(--share-color);font-size:16px;line-height:22px;font-weight:700;white-space:nowrap;}
   .top-share-pct{display:inline-flex;align-items:center;justify-content:center;min-width:76px;margin-top:6px;padding:5px 12px;border-radius:999px;background:color-mix(in srgb,var(--share-color) 13%,white);color:var(--share-color);font-size:12px;line-height:16px;font-weight:800;white-space:nowrap;}
 
   .panel{background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:20px;margin-bottom:16px;overflow-x:auto;box-shadow:var(--shadow-card);}
@@ -247,7 +249,7 @@
   .mini-tag{display:inline-flex;align-items:center;gap:5px;background:#eef1f7;border-radius:7px;padding:3px 8px;font-size:11px;font-weight:600;color:var(--navy);}
   .mini-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--blue-accent);}
 
-  /* ---------- Performance CA par commerciale ---------- */
+  /* ---------- Performance CA par commercial ---------- */
   .contrib-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
   .contrib-hero{padding:22px 22px 18px;background:linear-gradient(135deg,#fff 0%,#f7fbfe 100%);}
   .contrib-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px;}
@@ -336,16 +338,16 @@
     <div class="sidebar-label">Reporting</div>
     <nav class="tabs" id="tabs">
       <button class="tab active" data-view="top-affaires"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><span class="tab-label">Top affaires</span></button>
-      <button class="tab" data-view="baisses"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 6l6 6 4-4 8 8"/><path d="M15 16h6v-6"/></svg></span><span class="tab-label">Baisses de CA</span></button>
-      <button class="tab" data-view="contribution"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 19c0-3 2.7-5 6-5s6 2 6 5"/><path d="M14 15c.8-.7 1.9-1 3-1 2.4 0 4 1.5 4 4"/></svg></span><span class="tab-label">Performance CA par commerciale</span></button>
+      <button class="tab" data-view="baisses"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 6l6 6 4-4 8 8"/><path d="M15 16h6v-6"/></svg></span><span class="tab-label">Plus fortes baisses de CA</span></button>
+      <button class="tab" data-view="contribution"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 19c0-3 2.7-5 6-5s6 2 6 5"/><path d="M14 15c.8-.7 1.9-1 3-1 2.4 0 4 1.5 4 4"/></svg></span><span class="tab-label">Performance CA par commercial</span></button>
       <button class="tab" data-view="performance-clients"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 21V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v16"/><path d="M9 21v-4h4v4M8 7h1m3 0h1M8 11h1m3 0h1M17 9h2a2 2 0 0 1 2 2v10"/></svg></span><span class="tab-label">Performance CA par client</span></button>
-      <button class="tab" data-view="detail-affaires"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 12h7M9 16h7"/></svg></span><span class="tab-label">Détail par affaire</span></button>
-      <button class="tab" data-view="detail-commerciaux"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></svg></span><span class="tab-label">Détail par commercial</span></button>
+      <button class="tab" data-view="detail-affaires"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 12h7M9 16h7"/></svg></span><span class="tab-label">Performance CA par affaire</span></button>
+      <button class="tab" data-view="detail-commerciaux"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></svg></span><span class="tab-label">Performance CA par commercial</span></button>
     </nav>
   </aside>
   <main class="container">
   <div class="dashboard-header">
-    <h1>Reporting activités commerciales</h1>
+    <h1>Reporting activité commerciale</h1>
     <div class="dashboard-date">À fin juin 2026</div>
   </div>
 
@@ -382,6 +384,15 @@ function fmtSignedKe(n){ return `${n>=0?'+':''}${fmtKe(n)}`; }
 function initials(name){
   return name.split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
 }
+function naturalClientName(name){
+  const value=String(name||'—').trim();
+  if(!/[A-ZÀ-ÖØ-Þ]{3}/.test(value) || value!==value.toUpperCase()) return value;
+  const smallWords=new Set(['de','du','des','la','le','les','et','en','à','au','aux']);
+  return value.toLocaleLowerCase('fr-FR').replace(/(^|[\s'’(/-])([\p{L}\p{N}]+)/gu,(match,separator,word,offset)=>{
+    if(offset>0 && smallWords.has(word)) return separator+word;
+    return separator+word.charAt(0).toLocaleUpperCase('fr-FR')+word.slice(1);
+  });
+}
 function esc(s){ return (s||'').replace(/"/g,'&quot;'); }
 function pctChange(current, previous){
   return previous!==0 ? ((current-previous)/Math.abs(previous))*100 : null;
@@ -412,7 +423,7 @@ function dateKey(value){
 function renderInvoiceRows(rows){
   return rows.map(t=>`<tr>
     <td>${t[6]||'—'}</td><td>${t[7]||'—'}</td><td>${t[4]||'—'}</td><td>${t[5]||'—'}</td><td>${t[1]||'—'}</td>
-    <td class="num" style="font-weight:700;">${fmtKe(t[3])} k€</td><td>${t[0]||'—'}</td><td>${t[2]||'—'}</td>
+    <td class="num" style="font-weight:700;">${fmtKe(t[3])} k€</td><td>${naturalClientName(t[0])}</td><td>${t[2]||'—'}</td>
   </tr>`).join('');
 }
 const invoiceFieldConfig={
@@ -510,6 +521,7 @@ function renderTopAffaireDetail(name){
   const diff = a.v2026-a.v2025;
   const evo = a.v2025>0 ? ((diff)/a.v2025*100) : null;
   const totalComm = a.commercial.reduce((s,c)=>s+c[1],0)||1;
+  const bestCommercialCA = Math.max(...a.commercial.map(c=>c[1]));
   return `<div class="md-detail">
     <div class="detail-header">
       <div class="avatar-circle">${a.rank}</div>
@@ -518,15 +530,15 @@ function renderTopAffaireDetail(name){
       </div>
     </div>
     <div class="kpi-cards-row">
-      <div class="kpi-card2"><div class="lbl">CA 2026</div><div class="val">${fmt(a.v2026)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">CA 2025</div><div class="val">${fmt(a.v2025)} k€</div></div>
+      <div class="kpi-card2"><div class="lbl">CA 2026</div><div class="val">${fmt(a.v2026)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">Δ Valeur</div><div class="val ${diff>=0?'pos':'neg'}">${diff>=0?'▲':'▼'} ${fmtSigned(diff)} k€</div><span class="delta-pct ${diff>=0?'pos':'neg'}">${evo!==null?(evo>=0?'+':'')+evo.toFixed(0)+'%':'—'}</span></div>
-      <div class="kpi-card2"><div class="lbl">Budget</div><div class="val">&nbsp;</div></div>
+      <div class="kpi-card2 is-unavailable" aria-label="Budget non disponible"><div class="lbl">Budget</div><div class="val">—</div></div>
     </div>
     <div class="panel">
       <div class="panel-head"><h3>Comparatif par commercial</h3></div>
       <table>
-        <thead><tr><th>Commercial</th><th class="num">CA 2026</th><th class="num">CA 2025</th><th class="num">Δ Valeur</th><th class="num">Δ % (2026 - CA 2025)</th></tr></thead>
+        <thead><tr><th>Commercial</th><th class="num">CA 2025</th><th class="num">CA 2026</th><th class="num">Δ Valeur</th><th class="num">Δ %</th></tr></thead>
         <tbody>
           ${a.commercial.map(c=>{
             const [cname,v26,v25] = c;
@@ -534,8 +546,8 @@ function renderTopAffaireDetail(name){
             const deltaPct = v25!==0 ? (ecart/v25*100) : null;
             return `<tr>
               <td><div style="display:flex;align-items:center;gap:8px;"><div class="avatar-circle round" style="width:28px;height:28px;font-size:11px;">${initials(cname)}</div>${cname}</div></td>
-              <td class="num" style="font-weight:700;color:var(--blue-accent);">${v26?fmt(v26)+' k€':'–'}</td>
               <td class="num">${v25?fmt(v25)+' k€':'–'}</td>
+              <td class="num" style="font-weight:700;color:var(--blue-accent);">${v26?fmt(v26)+' k€':'–'}</td>
               <td class="num" style="font-weight:700;color:${ecart>=0?'var(--green)':'var(--red)'};">${fmtSigned(ecart)} k€</td>
               <td class="num" style="font-weight:700;color:${deltaPct===null?'var(--text-muted)':ecart>=0?'var(--green)':'var(--red)'};">${deltaPct===null?'—':`${deltaPct>=0?'+':''}${deltaPct.toFixed(1).replace('.',',')}%`}</td>
             </tr>`;
@@ -549,8 +561,8 @@ function renderTopAffaireDetail(name){
         ${a.commercial.map((c,index)=>{
           const [cname,v26] = c;
           const share = v26/totalComm*100;
-          const shareColors = ['#0E5ECF','#1584AE','#862EDA','#11B081'];
-          const shareColor = shareColors[index%shareColors.length];
+          const shareColors = ['#104B8C','#1584AE','#0E5ECF','#61BFED'];
+          const shareColor = v26===bestCommercialCA ? '#11B081' : shareColors[index%shareColors.length];
           return `<div class="top-share-card" style="--share-color:${shareColor};--share-delay:${index*65}ms">
             <div class="top-share-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
             <div class="top-share-name">${cname}</div>
@@ -580,7 +592,7 @@ function renderBaissesSidebar(){
     <div class="md-sidebar-head"><h3>Clients en baisse</h3><span class="md-count">${DATA.baisses.length}</span></div>
     <div class="md-list no-scroll-list">
       ${DATA.baisses.map((b,i)=>{
-        const title = b.label.replace(/^\d+\.\s*/, '').replace(/\s*:\s*baisse.*$/i,'');
+        const title = naturalClientName(b.label.replace(/^\d+\.\s*/, '').replace(/\s*:\s*baisse.*$/i,''));
         return `<div class="md-item ${i===baisseSelectedIdx?'active':''}" data-i="${i}">
           <div><div class="name">${title}</div></div>
           <span class="tag down">${fmtSigned(b.ecart)} k€</span>
@@ -591,7 +603,7 @@ function renderBaissesSidebar(){
 }
 function renderBaisseDetail(i){
   const b = DATA.baisses[i];
-  const title = b.label.replace(/^\d+\.\s*/, '').replace(/\s*:\s*baisse.*$/i,'');
+  const title = naturalClientName(b.label.replace(/^\d+\.\s*/, '').replace(/\s*:\s*baisse.*$/i,''));
   const pct = b.m2025>0 ? (b.ecart/b.m2025*100) : null;
   return `<div class="md-detail baisse-detail">
     <div class="detail-header">
@@ -600,12 +612,12 @@ function renderBaisseDetail(i){
       </div>
     </div>
     <div class="kpi-cards-row">
-      <div class="kpi-card2"><div class="lbl">CA 2026</div><div class="val">${fmt(b.m2026)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">CA 2025</div><div class="val">${fmt(b.m2025)} k€</div></div>
+      <div class="kpi-card2"><div class="lbl">CA 2026</div><div class="val">${fmt(b.m2026)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">Δ Valeur</div><div class="val neg">${fmtSigned(b.ecart)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">Δ %</div><div class="val neg">${pct!==null?pct.toFixed(0)+'%':'—'}</div></div>
     </div>
-    <div class="panel baisse-analysis"><div class="panel-head"><h3>Commentaire</h3></div><div class="comment-box">Baisse de chiffre d'affaires classée #${i+1}</div></div>
+    <div class="panel baisse-analysis"><div class="panel-head"><h3>Commentaire</h3></div><div class="comment-box">${b.comment||'—'}</div></div>
   </div>`;
 }
 function renderBaissesView(){
@@ -640,7 +652,7 @@ function renderContribution(){
   const el = document.getElementById('view-contribution');
   el.innerHTML = `<div class="card contrib-hero">
     <div class="contrib-heading">
-      <div><h2>Performance CA par commerciale</h2><div class="subtitle">2026 vs 2025</div></div>
+      <div><h2>Analyse de la performance des commerciaux</h2><div class="subtitle">2026 vs 2025</div></div>
       <span class="contrib-period">À fin juin 2026</span>
     </div>
     <section class="contrib-section">
@@ -736,12 +748,12 @@ function renderPCSidebar(){
       </select>
     </div>
     <div class="pc-table-wrap"><table class="pc-table">
-      <thead><tr><th>${pcSortHeader('name','Client')}</th><th class="num">${pcSortHeader('v26','CA 2026')}</th><th class="num">${pcSortHeader('v25','CA 2025')}</th><th class="num">${pcSortHeader('diff','Δ Valeur')}</th><th class="num">${pcSortHeader('pct','Δ %')}</th></tr></thead>
+      <thead><tr><th>${pcSortHeader('name','Client')}</th><th class="num">${pcSortHeader('v25','CA 2025')}</th><th class="num">${pcSortHeader('v26','CA 2026')}</th><th class="num">${pcSortHeader('diff','Δ Valeur')}</th><th class="num">${pcSortHeader('pct','Δ %')}</th></tr></thead>
       <tbody>${pag.slice.map(name=>{
         const v26=clientTotal(name,'2026'), v25=clientTotal(name,'2025'), diff=v26-v25;
-        return `<tr><td class="client-cell"><div class="pc-client-meta"><span>${name}</span></div></td>
-          <td class="num"><button class="pc-ca-link" data-name="${esc(name)}" data-period="2026" type="button" aria-label="Voir les factures 2026 de ${esc(name)}">${fmtKe(v26)} k€</button></td>
+        return `<tr><td class="client-cell"><div class="pc-client-meta"><span>${naturalClientName(name)}</span></div></td>
           <td class="num"><button class="pc-ca-link" data-name="${esc(name)}" data-period="2025" type="button" aria-label="Voir les factures 2025 de ${esc(name)}">${fmtKe(v25)} k€</button></td>
+          <td class="num"><button class="pc-ca-link" data-name="${esc(name)}" data-period="2026" type="button" aria-label="Voir les factures 2026 de ${esc(name)}">${fmtKe(v26)} k€</button></td>
           <td class="num" style="font-weight:700;color:${diff>=0?'var(--green)':'var(--red)'};">${fmtSignedKe(diff)} k€</td>
           <td class="num" style="font-weight:700;color:${diff>=0?'var(--green)':'var(--red)'};">${fmtPct(v26,v25)}</td></tr>`;
       }).join('') || '<tr><td colspan="5" class="empty-state">Aucun client ne correspond aux filtres.</td></tr>'}</tbody>
@@ -773,15 +785,15 @@ function renderPCDetail(){
     <button class="pc-back-button" id="pcBackButton" type="button">← Retour à la performance clients</button>
     <div class="detail-header">
       <div class="avatar-circle round">${initials(pcSelected)}</div>
-      <div class="detail-title-wrap"><div class="detail-title">${pcSelected}</div></div>
+      <div class="detail-title-wrap"><div class="detail-title">${naturalClientName(pcSelected)}</div></div>
       <div class="pc-period-switch" id="pcPeriodSwitch">
-        <button class="pc-period-button ${pcTxPeriod==='2026'?'active':''}" data-period="2026" type="button">CA 2026 · ${fmtKe(v26)} k€</button>
         <button class="pc-period-button ${pcTxPeriod==='2025'?'active':''}" data-period="2025" type="button">CA 2025 · ${fmtKe(v25)} k€</button>
+        <button class="pc-period-button ${pcTxPeriod==='2026'?'active':''}" data-period="2026" type="button">CA 2026 · ${fmtKe(v26)} k€</button>
       </div>
     </div>
     <div class="kpi-cards-row">
-      <div class="kpi-card2 ${pcTxPeriod==='2026'?'selected-period':''}"><div class="lbl">CA 2026</div><div class="val">${fmtKe(v26)} k€</div></div>
       <div class="kpi-card2 ${pcTxPeriod==='2025'?'selected-period':''}"><div class="lbl">CA 2025</div><div class="val">${fmtKe(v25)} k€</div></div>
+      <div class="kpi-card2 ${pcTxPeriod==='2026'?'selected-period':''}"><div class="lbl">CA 2026</div><div class="val">${fmtKe(v26)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">Δ Valeur</div><div class="val ${diff>=0?'pos':'neg'}">${fmtSignedKe(diff)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">Δ %</div><div class="val ${diff>=0?'pos':'neg'}">${fmtPct(v26,v25)}</div></div>
     </div>
@@ -851,7 +863,8 @@ const DA_ENTITY_PER_PAGE = 24;
 function daEntityCard(label,items,type){
   if(items.length<=3){
     const emptyLabel=type==='clients'?'Aucun client':'Aucun commercial';
-    return `<div class="kpi-card2 detail-tooltip-card" tabindex="0" aria-label="${label} : ${esc(items.join(', ')||emptyLabel)}"><div class="lbl">${label}</div><div class="val">${items.length}</div><div class="entity-tooltip" role="tooltip"><strong>Détail des ${label.toLowerCase()}</strong>${items.length?items.map(name=>esc(name)).join('<br>'):emptyLabel}</div></div>`;
+    const displayItems=type==='clients'?items.map(naturalClientName):items;
+    return `<div class="kpi-card2 detail-tooltip-card" tabindex="0" aria-label="${label} : ${esc(displayItems.join(', ')||emptyLabel)}"><div class="lbl">${label}</div><div class="val">${items.length}</div><div class="entity-tooltip" role="tooltip"><strong>Détail des ${label.toLowerCase()}</strong>${displayItems.length?displayItems.map(name=>esc(name)).join('<br>'):emptyLabel}</div></div>`;
   }
   return `<button class="kpi-card2 detail-entity-link" type="button" data-da-entity="${type}" aria-label="Voir les ${items.length} ${label.toLowerCase()}"><div class="lbl">${label}</div><div class="val">${items.length}</div><div class="detail-entity-action"><span>Voir la liste</span><span aria-hidden="true">→</span></div></button>`;
 }
@@ -873,7 +886,7 @@ function renderDAEntityPage(){
     <div class="panel">
       <div class="entity-page-head"><div><h2>${label}</h2><p>${esc(daSelected||'—')} · ${daPeriod}</p></div><span class="md-count">${filtered.length} / ${all.length}</span></div>
       <div class="entity-page-toolbar"><input type="search" id="daEntitySearch" placeholder="Rechercher ${daEntityMode==='clients'?'un client':'un commercial'}..." value="${esc(daEntitySearch)}"><span class="subtitle">${all.length} ${label.toLowerCase()}</span></div>
-      <div class="entity-list">${pag.slice.map((name,index)=>`<div class="entity-list-item"><span class="entity-list-index">${(pag.page-1)*DA_ENTITY_PER_PAGE+index+1}</span><span class="entity-list-name">${esc(name)}</span></div>`).join('')||'<div class="empty-state">Aucun résultat.</div>'}</div>
+      <div class="entity-list">${pag.slice.map((name,index)=>`<div class="entity-list-item"><span class="entity-list-index">${(pag.page-1)*DA_ENTITY_PER_PAGE+index+1}</span><span class="entity-list-name">${esc(daEntityMode==='clients'?naturalClientName(name):name)}</span></div>`).join('')||'<div class="empty-state">Aucun résultat.</div>'}</div>
       <div class="pagination" id="daEntityPagination"></div>
     </div>
   </div>`;
@@ -1037,13 +1050,13 @@ function renderDCSidebar(){
       </select>
     </div>
     <div class="pc-table-wrap"><table class="pc-table">
-      <thead><tr><th>${dcSortHeader('name','Commercial')}</th><th class="num">${dcSortHeader('v26','CA 2026')}</th><th class="num">${dcSortHeader('v25','CA 2025')}</th><th class="num">${dcSortHeader('diff','Δ Valeur')}</th><th class="num">${dcSortHeader('pct','Δ %')}</th></tr></thead>
+      <thead><tr><th>${dcSortHeader('name','Commercial')}</th><th class="num">${dcSortHeader('v25','CA 2025')}</th><th class="num">${dcSortHeader('v26','CA 2026')}</th><th class="num">${dcSortHeader('diff','Δ Valeur')}</th><th class="num">${dcSortHeader('pct','Δ %')}</th></tr></thead>
       <tbody>${pag.slice.map(n=>{
         const t26 = commTotal(n, commIdx2026), t25 = commTotal(n, commIdx2025);
         const diff=t26-t25;
         return `<tr><td class="client-cell"><div class="pc-client-meta"><span>${n}</span></div></td>
-          <td class="num"><button class="dc-ca-link pc-ca-link" data-name="${esc(n)}" data-period="2026" type="button" aria-label="Voir les factures 2026 de ${esc(n)}">${fmtKe(t26)} k€</button></td>
           <td class="num"><button class="dc-ca-link pc-ca-link" data-name="${esc(n)}" data-period="2025" type="button" aria-label="Voir les factures 2025 de ${esc(n)}">${fmtKe(t25)} k€</button></td>
+          <td class="num"><button class="dc-ca-link pc-ca-link" data-name="${esc(n)}" data-period="2026" type="button" aria-label="Voir les factures 2026 de ${esc(n)}">${fmtKe(t26)} k€</button></td>
           <td class="num" style="font-weight:700;color:${diff>=0?'var(--green)':'var(--red)'};">${fmtSignedKe(diff)} k€</td>
           <td class="num" style="font-weight:700;color:${diff>=0?'var(--green)':'var(--red)'};">${fmtPct(t26,t25)}</td></tr>`;
       }).join('') || '<tr><td colspan="5" class="empty-state">Aucun commercial ne correspond aux filtres.</td></tr>'}</tbody>
@@ -1089,8 +1102,8 @@ function renderDCLegacyDetail(){
       </div>
     </div>
     <div class="kpi-cards-row">
-      <div class="kpi-card2"><div class="lbl">CA 2026</div><div class="val">${fmtKe(t26)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">CA 2025</div><div class="val">${fmtKe(t25)} k€</div></div>
+      <div class="kpi-card2"><div class="lbl">CA 2026</div><div class="val">${fmtKe(t26)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">Δ Valeur</div><div class="val ${tdiff>=0?'pos':'neg'}">${fmtSignedKe(tdiff)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">Δ %</div><div class="val ${tdiff>=0?'pos':'neg'}">${fmtPct(t26,t25)}</div></div>
     </div>
@@ -1143,7 +1156,7 @@ function renderDCLegacyDetail(){
         <thead><tr><th>Client</th><th>Dernière facture</th><th class="num">Factures</th><th class="num">CA</th></tr></thead>
         <tbody>
           ${cliPag.slice.map(c=>`<tr>
-            <td>${c.key||'—'}</td><td>${c.lastDate||'—'}</td>
+            <td>${naturalClientName(c.key)}</td><td>${c.lastDate||'—'}</td>
             <td class="num">${c.count}</td>
             <td class="num" style="font-weight:700;">${fmtKe(c.total)} k€</td>
           </tr>`).join('') || '<tr><td colspan="4" style="color:var(--text-muted);text-align:center;">Aucune donnée pour cette période</td></tr>'}
@@ -1166,13 +1179,13 @@ function renderDCDetail(){
       <div class="avatar-circle round">${initials(dcSelected||'?')}</div>
       <div class="detail-title-wrap"><div class="detail-title">${dcSelected||'—'}</div><div class="detail-sub">Factures composant le CA ${dcTxPeriod} • ${invoiceTxs.length} ligne(s)</div></div>
       <div class="pc-period-switch" id="dcTxToggle">
-        <button class="pc-period-button ${dcTxPeriod==='2026'?'active':''}" data-p="2026" type="button">CA 2026 · ${fmtKe(t26)} k€</button>
         <button class="pc-period-button ${dcTxPeriod==='2025'?'active':''}" data-p="2025" type="button">CA 2025 · ${fmtKe(t25)} k€</button>
+        <button class="pc-period-button ${dcTxPeriod==='2026'?'active':''}" data-p="2026" type="button">CA 2026 · ${fmtKe(t26)} k€</button>
       </div>
     </div>
     <div class="kpi-cards-row">
-      <div class="kpi-card2 ${dcTxPeriod==='2026'?'selected-period':''}"><div class="lbl">CA 2026</div><div class="val">${fmtKe(t26)} k€</div></div>
       <div class="kpi-card2 ${dcTxPeriod==='2025'?'selected-period':''}"><div class="lbl">CA 2025</div><div class="val">${fmtKe(t25)} k€</div></div>
+      <div class="kpi-card2 ${dcTxPeriod==='2026'?'selected-period':''}"><div class="lbl">CA 2026</div><div class="val">${fmtKe(t26)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">Δ Valeur</div><div class="val ${diff>=0?'pos':'neg'}">${fmtSignedKe(diff)} k€</div></div>
       <div class="kpi-card2"><div class="lbl">Δ %</div><div class="val ${diff>=0?'pos':'neg'}">${fmtPct(t26,t25)}</div></div>
     </div>
