@@ -10,7 +10,7 @@
 <script>
   (()=>{try{
     const saved=localStorage.getItem('leni-dashboard-theme');
-    const theme=saved||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+    const theme=saved||'light';
     document.documentElement.dataset.theme=theme;
     document.documentElement.style.colorScheme=theme;
   }catch(e){}})();
