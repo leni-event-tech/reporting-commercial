@@ -542,16 +542,7 @@ function initials(name){
   return name.split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
 }
 function naturalClientName(name){
-  const value=String(name||'—').trim();
-  if(/^MEAE$/i.test(value)) return 'MEAE';
-  if(/^COMEXPOSIUM$/i.test(value)) return 'COMEXPOSIUM';
-  if(/^PALAIS DU PHARO\b/.test(value)) return value.replace(/^PALAIS DU PHARO/,'Palais du Pharo');
-  if(!/[A-ZÀ-ÖØ-Þ]{3}/.test(value) || value!==value.toUpperCase()) return value;
-  const smallWords=new Set(['de','du','des','la','le','les','et','en','à','au','aux']);
-  return value.toLocaleLowerCase('fr-FR').replace(/(^|[\s'’(/-])([\p{L}\p{N}]+)/gu,(match,separator,word,offset)=>{
-    if(offset>0 && smallWords.has(word)) return separator+word;
-    return separator+word.charAt(0).toLocaleUpperCase('fr-FR')+word.slice(1);
-  });
+  return String(name||'—').trim().toLocaleUpperCase('fr-FR');
 }
 function esc(s){ return (s||'').replace(/"/g,'&quot;'); }
 function pctChange(current, previous){
